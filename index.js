@@ -16,7 +16,7 @@ app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function (req, res) {
-  console.log('console test')
+  //console.log('console test')
   res.sendFile(__dirname + '/views/index.html');
 });
 
@@ -24,6 +24,16 @@ app.get('/', function (req, res) {
 app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
 });
+
+app.get('/api/whoami', function (req, res) {
+  // console.log(req.headers)
+  const ipaddress = req.headers['x-forwarded-for']
+  const language = req.headers['accept-language']
+  const software = req.headers['user-agent']
+  // console.log(ipaddress)
+  res.json({ipaddress: ipaddress, language: language, software: software})
+})
+
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
